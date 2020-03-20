@@ -4,9 +4,9 @@ import './Collection.css'
 import EmployeeCard from '../../components/EmployeeCard'
 const Collection = (props) => {
   return (
-    <div className="card-deck">
+    <div>
       {props.employeeDisplay.map(employee => ( 
-        <EmployeeCard employee={employee}/>
+        <EmployeeCard key={employee.id} employee={employee}/>
       ))
       }
     </div>

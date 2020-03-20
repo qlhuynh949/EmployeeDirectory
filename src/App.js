@@ -24,26 +24,33 @@ handleInputChangeSearch = event => {
 }
 
 handleFormSearch = event => {
+  console.log(event)
   event.preventDefault()
 
+  console.log('ping')
   if ((this.state.search !== null) || (this.state.search !=='')|| (this.state.search.length > 0))
   {
   filterEmployees = this.state.employeeData.filter(
     (element) => {
+      let searchByResult
       switch (this.state.searchBy) {
         case 1: // Department
-          return element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          searchByResult = element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
           break;
         case 2: // Title
-          return element.job_title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          searchByResult = element.job_title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
           break;
         case 3: // Employee Last Name
-          return element.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          searchByResult = element.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
           break
         case 4: // Employee First Name
-          return element.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          searchByResult = element.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          break
+        default:
+          searchByResult = element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
           break
       }
+      return searchByResult
     })
 
     //Now Sort by
@@ -60,6 +67,9 @@ handleFormSearch = event => {
     case 4: // Employee First Name
         filterEmployees.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)      
         break
+    default:
+        filterEmployees.sort((a, b) => (a.department > b.departement) ? 1 : -1)
+        break;
     }
 
     this.setState({
@@ -82,13 +92,15 @@ handleInputChangeSearchBy=event=>{
   this.setState({
     searchBy: event.target.value
   })
-
+  console.log(this.state.searchBy)
 }
 
   handleInputChangeOrderBy = event => {
     this.setState({
       orderBy: event.target.value
     })
+    console.log(this.state.orderBy)
+
   }
 
   //Load the employeeData
@@ -145,7 +157,7 @@ handleInputChangeSearchBy=event=>{
     { "id": 49, "first_name": "Dorey", "last_name": "Flohard", "email": "dflohard1c@free.fr", "gender": "Female", "username": "dflohard1c", "department": "Human Resources", "job_title": "Budget/Accounting Analyst I" },
     { "id": 50, "first_name": "Terri-jo", "last_name": "Caird", "email": "tcaird1d@cam.ac.uk", "gender": "Female", "username": "tcaird1d", "department": "Marketing", "job_title": "Teacher" }]
     this.setState({ employeeData: employees })
-
+    this.setState({ employeeDisplayData:employees})
   }
 
   render() {

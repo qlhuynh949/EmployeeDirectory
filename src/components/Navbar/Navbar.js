@@ -4,7 +4,7 @@ import './Navbar.css'
 const Navbar = (props) => {
   return (
     <nav className="navbar navbar-light bg-light justify-content-between">
-      <a className="navbar-brand">Employee Lookup</a>
+      <div className="navbar-brand">Employee Lookup</div>
       <form className="form-inline">
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -21,7 +21,7 @@ const Navbar = (props) => {
           name="search"
           value={props.searchValue}
           onChange={props.handleInputChangeSearch} />
-          <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={() => props.handleKey(props.keyItem)}>Search</button>
+          <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={props.handleKey}>Search</button>
           <div className="input-group-prepend">
             <label className="input-group-text" htmlFor="OrderBy">Order By</label>
           </div>
