@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
 import Collection from './components/Collection'
@@ -10,97 +10,103 @@ let filterEmployees
 class App extends Component {
 
   state = {
-    search:'',
-    searchBy:'',
+    search: '',
+    searchBy: '',
     orderBy: '',
-    employeeData:[],
-    employeeDisplayData:[]
+    employeeData: [],
+    employeeDisplayData: []
   }
 
 
 
-handleInputChangeSearch = event => {
-  this.setState({ search: event.target.value })
-}
+  handleInputChangeSearch = event => {
+    this.setState({ search: event.target.value })
+  }
 
-handleFormSearch = event => {
-  console.log(event)
-  event.preventDefault()
+  handleFormSearch = event => {
+    event.preventDefault()
 
-  console.log('ping')
-  if ((this.state.search !== null) || (this.state.search !=='')|| (this.state.search.length > 0))
-  {
-  filterEmployees = this.state.employeeData.filter(
-    (element) => {
-      let searchByResult
-      switch (this.state.searchBy) {
+    if ((this.state.search !== null) || (this.state.search !== '') || (this.state.search.length > 0)) {
+
+      switch (parseInt(this.state.searchBy)) {
         case 1: // Department
-          searchByResult = element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          console.log('Department')
+          filterEmployees = this.state.employeeData.filter(
+            (element) => {
+              return element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            })
           break;
         case 2: // Title
-          searchByResult = element.job_title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          filterEmployees = this.state.employeeData.filter(
+            (element) => {
+              return element.job_title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            })
           break;
         case 3: // Employee Last Name
-          searchByResult = element.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          filterEmployees = this.state.employeeData.filter(
+            (element) => {
+              return element.last_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            })
           break
         case 4: // Employee First Name
-          searchByResult = element.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          filterEmployees = this.state.employeeData.filter(
+            (element) => {
+              return element.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            })
           break
         default:
-          searchByResult = element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          filterEmployees = this.state.employeeData.filter(
+            (element) => {
+              return element.department.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            })
           break
       }
-      return searchByResult
-    })
 
-    //Now Sort by
-    switch (this.state.orderBy) {
-    case 1: // Department
-        filterEmployees.sort((a, b) => (a.department > b.departement) ? 1 : -1)
-      break;
-    case 2: // Title
-        filterEmployees.sort((a, b) => (a.job_title > b.job_title) ? 1 : -1)
-      break;
-    case 3: // Employee Last Name
-        filterEmployees.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1)
-      break
-    case 4: // Employee First Name
-        filterEmployees.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)      
-        break
-    default:
-        filterEmployees.sort((a, b) => (a.department > b.departement) ? 1 : -1)
-        break;
+
+      //Now Sort by
+      switch (parseInt(this.state.orderBy)) {
+        case 1: // Department
+          filterEmployees.sort((a, b) => (a.department > b.departement) ? 1 : -1)
+          break;
+        case 2: // Title
+          filterEmployees.sort((a, b) => (a.job_title > b.job_title) ? 1 : -1)
+          break;
+        case 3: // Employee Last Name
+          filterEmployees.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1)
+          break
+        case 4: // Employee First Name
+          filterEmployees.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)
+          break
+        default:
+          filterEmployees.sort((a, b) => (a.department > b.departement) ? 1 : -1)
+          break;
+      }
+
+      this.setState({
+        employeeDisplayData: filterEmployees
+      })
+
     }
+    else {
+      this.setState({
+        employeeDisplayData: this.state.employeeData
+      })
 
-    this.setState({
-      employeeDisplayData: filterEmployees
-    })
-
+    }
   }
-  else 
-  {
+
+
+
+  handleInputChangeSearchBy = event => {
     this.setState({
-      employeeDisplayData: this.state.employeeData
+      searchBy: event.target.value
     })
-
   }
-}
-
-
-
-handleInputChangeSearchBy=event=>{
-  this.setState({
-    searchBy: event.target.value
-  })
-  console.log(this.state.searchBy)
-}
 
   handleInputChangeOrderBy = event => {
     this.setState({
       orderBy: event.target.value
     })
-    console.log(this.state.orderBy)
-
   }
 
   //Load the employeeData
@@ -157,15 +163,15 @@ handleInputChangeSearchBy=event=>{
     { "id": 49, "first_name": "Dorey", "last_name": "Flohard", "email": "dflohard1c@free.fr", "gender": "Female", "username": "dflohard1c", "department": "Human Resources", "job_title": "Budget/Accounting Analyst I" },
     { "id": 50, "first_name": "Terri-jo", "last_name": "Caird", "email": "tcaird1d@cam.ac.uk", "gender": "Female", "username": "tcaird1d", "department": "Marketing", "job_title": "Teacher" }]
     this.setState({ employeeData: employees })
-    this.setState({ employeeDisplayData:employees})
+    this.setState({ employeeDisplayData: employees })
   }
 
   render() {
     return (
-    <>
+      <>
         <Navbar keyItem={0}
-          handleKey={this.handleFormSearch} 
-          searchValue={this.state.search} 
+          handleKey={this.handleFormSearch}
+          searchValue={this.state.search}
           handleInputChangeSearch={this.handleInputChangeSearch}
           handleInputChangeSearchBy={this.handleInputChangeSearchBy
           }
@@ -173,10 +179,10 @@ handleInputChangeSearchBy=event=>{
         />
 
         <div id='SearchResults'>
-          <Collection employeeDisplay={this.state.employeeDisplayData}/>
+          <Collection employeeDisplay={this.state.employeeDisplayData} />
         </div>
-    </>
-  )
+      </>
+    )
   }
 }
 export default App;
