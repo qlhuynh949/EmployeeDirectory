@@ -6,7 +6,7 @@ const Navbar = (props) => {
     <nav className="navbar navbar-light bg-light justify-content-between">
       <div className="navbar-brand">Employee Lookup</div>
       <form className="form-inline">
-        <div className="input-group mb-3">
+        <div className="input-group-sm mb-3">
           <div className="input-group-prepend">
             <label className="input-group-text" htmlFor="SearchBy">Search By</label>
           </div>
